@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider ="postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Tour {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  title          String
+  location       String
+  image          String
+  gallery        String[]
+  description    String
+  duration       String
+  difficulty     String
+  price          String
+  highlights     String[]
+  includes       String[]
+  contactMessage String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  stars     Int
+  quote     String
+  name      String
+  country   String
+  flag      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

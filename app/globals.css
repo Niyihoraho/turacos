@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #1a4731;
+  --color-gold: #c9a84c;
+  --color-cream: #f9f6f0;
+  --color-charcoal: #1c1c1c;
+  
+  --font-serif: var(--font-playfair), serif;
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-cream text-charcoal font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gold text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-gold/90 active:scale-95 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-white text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-white hover:text-charcoal active:scale-95;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-forest mb-4 text-center;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-charcoal/70 text-center mb-12 max-w-2xl mx-auto;
+  }
+}
