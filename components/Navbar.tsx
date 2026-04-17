@@ -87,14 +87,13 @@ const Navbar = ({ hideLinks = false }: NavbarProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-[84px] items-center justify-between gap-4">
           <Link href="/" className="flex shrink-0 items-center gap-3 group">
-            <div className="relative h-12 w-12 overflow-hidden shadow-md shadow-black/10 transition-transform group-hover:scale-105">
-              <Image 
+            <Image 
                 src="/images/logoo.png" 
                 alt="Turacos Tours Logo" 
-                fill 
-                className="object-contain"
+                width={48}
+                height={48}
+                className="object-contain transition-transform group-hover:scale-105"
               />
-            </div>
             <div className="flex flex-col leading-none">
               <span className="font-serif text-2xl font-bold tracking-tight text-white uppercase">Turacos Tours</span>
               <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">Rwanda travel studio</span>

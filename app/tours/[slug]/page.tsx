@@ -88,6 +88,7 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
                 src={tour.image}
                 alt={tour.title}
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
                 priority
                 referrerPolicy="no-referrer"
@@ -123,6 +124,7 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
                         src={image}
                         alt={`${tour.title} view ${index + 1}`}
                         fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         priority={index === 0}
                       />

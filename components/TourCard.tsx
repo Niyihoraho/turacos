@@ -17,13 +17,14 @@ const TourCard = ({ tour, activities, onEdit, onDelete }: TourCardProps) => {
   const { isAdmin } = useAuth();
   
   return (
-    <Link href={`/tours/${tour.slug}`} className="group bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-12px_rgba(11,61,81,0.15)] border border-charcoal/5 transition-all duration-700 hover:-translate-y-3 relative cursor-pointer flex flex-col h-full max-w-sm mx-auto w-full block">
+    <Link href={`/tours/${tour.slug}`} className="group bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-12px_rgba(11,61,81,0.15)] border border-charcoal/5 transition-all duration-700 hover:-translate-y-3 relative cursor-pointer flex flex-col h-full max-w-sm mx-auto w-full">
       {/* Optimized Image Height for 3-Column Layout */}
       <div className="relative h-52 overflow-hidden shrink-0">
         <Image
           src={tour.image}
           alt={tour.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
         

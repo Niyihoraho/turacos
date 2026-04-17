@@ -27,14 +27,13 @@ const Footer = () => {
           <div className="grid gap-10 pb-16 md:grid-cols-[1.15fr_0.85fr_0.8fr]">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="relative h-12 w-12 overflow-hidden">
-                  <Image 
+                <Image 
                     src="/images/logoo.png" 
                     alt="Turacos Tours Logo" 
-                    fill 
+                    width={48}
+                    height={48}
                     className="object-contain"
                   />
-                </div>
                 <p className="text-[12px] font-bold uppercase tracking-[0.4em] text-gold">Turacos Tours</p>
               </div>
               <h3 className="font-serif text-3xl font-bold text-white">Designed for calm, meaningful Rwanda travel.</h3>
