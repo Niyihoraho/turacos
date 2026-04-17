@@ -1,153 +1,211 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LoginModal from './LoginModal';
-import { useAuth } from './AuthProvider';
 
-const Navbar = () => {
+interface NavbarProps {
+  hideLinks?: boolean;
+}
+
+const NAV_LINKS = [
+  { name: 'Home', href: '/' },
+  { name: 'Tours', href: '/#tours' },
+  { name: 'Rwanda', href: '/#rwanda' },
+  { name: 'Impact', href: '/#impact' },
+  { name: 'Guide', href: '/#guide' },
+  { name: 'Contact', href: '/#contact' },
+];
+
+const Navbar = ({ hideLinks = false }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const { isAdmin, logout } = useAuth();
+  const [activeLink, setActiveLink] = useState('Home');
+  const pathname = usePathname();
+
+  const highlightedLink = hoveredLink ?? activeLink;
+
+  const sectionLinks = useMemo(
+    () => NAV_LINKS.filter((link) => link.href.startsWith('/#')),
+    []
+  );
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    if (pathname !== '/') {
+      setActiveLink('Home');
+      return;
+    }
+
+    const syncActiveLink = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (!hash && window.scrollY < 160) {
+        setActiveLink('Home');
+        return;
+      }
+
+      let current = 'Home';
+
+      for (const link of sectionLinks) {
+        const id = link.href.replace('/#', '');
+        const section = document.getElementById(id);
+
+        if (!section) {
+          continue;
+        }
+
+        const top = section.offsetTop - 140;
+        if (window.scrollY >= top) {
+          current = link.name;
+        }
+      }
+
+      if (hash) {
+        const matchedLink = sectionLinks.find((link) => link.href === `/#${hash}`);
+        if (matchedLink) {
+          current = matchedLink.name;
+        }
+      }
+
+      setActiveLink(current);
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    syncActiveLink();
+    window.addEventListener('scroll', syncActiveLink, { passive: true });
+    window.addEventListener('hashchange', syncActiveLink);
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Tours', href: '/#tours' },
-    { name: 'Rwanda', href: '/#rwanda' },
-    { name: 'Impact', href: '/#impact' },
-    { name: 'Guide', href: '/#guide' },
-    { name: 'Contact', href: '/#contact' },
-  ];
+    return () => {
+      window.removeEventListener('scroll', syncActiveLink);
+      window.removeEventListener('hashchange', syncActiveLink);
+    };
+  }, [pathname, sectionLinks]);
 
   return (
-    <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? 'py-4' : 'py-6'}`}>
+    <nav className="sticky top-0 z-50 border-b border-white/10 bg-kivu-blue shadow-[0_14px_40px_rgba(10,35,46,0.18)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className={`grid grid-cols-2 lg:grid-cols-3 items-center justify-between gap-4 transition-all duration-500 ease-in-out ${scrolled
-              ? 'rounded-full border border-white/20 bg-forest/90 px-6 py-2 md:px-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-lg'
-              : 'bg-transparent px-0'
-            }`}
-        >
-          {/* Logo */}
-          <div 
-            onClick={() => isAdmin ? logout() : setIsLoginModalOpen(true)}
-            className="flex shrink-0 items-center space-x-3 py-3 cursor-pointer group"
-            title={isAdmin ? "Logout Admin" : "Login Admin"}
-          >
-            <span className="text-xl md:text-2xl font-bold text-gold whitespace-nowrap font-serif tracking-tight flex items-center gap-2 group-hover:scale-105 transition-transform">
-              <span className="text-2xl">🦜</span> Turacos Tours
-            </span>
-          </div>
-
-          {/* Desktop Nav Links (Centered) */}
-          <div className="hidden lg:flex justify-center items-center">
-            <div className="flex items-center gap-1 relative">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onMouseEnter={() => setHoveredLink(link.name)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                  className="relative rounded-full px-4 py-2 text-white transition-colors font-medium text-xs uppercase tracking-[0.15em] z-10"
-                >
-                  <span className="relative z-10">{link.name}</span>
-                  {hoveredLink === link.name && (
-                    <motion.div
-                      layoutId="nav-pill"
-                      className="absolute inset-0 bg-white/10 rounded-full"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                </Link>
-              ))}
+        <div className="flex min-h-[84px] items-center justify-between gap-4">
+          <Link href="/" className="flex shrink-0 items-center gap-3 group">
+            <div className="relative h-12 w-12 overflow-hidden shadow-md shadow-black/10 transition-transform group-hover:scale-105">
+              <Image 
+                src="/images/logoo.png" 
+                alt="Turacos Tours Logo" 
+                fill 
+                className="object-contain"
+              />
             </div>
-          </div>
+            <div className="flex flex-col leading-none">
+              <span className="font-serif text-2xl font-bold tracking-tight text-white uppercase">Turacos Tours</span>
+              <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">Rwanda travel studio</span>
+            </div>
+          </Link>
 
-          {/* Action Button (Right) */}
-          <div className="hidden lg:flex justify-end items-center">
-            <Link href="/#plan" className="btn-gold !py-2.5 !px-6 text-xs uppercase tracking-widest font-bold shadow-xl hover:scale-105 active:scale-95 transition-all">
-              Book Now
-            </Link>
-          </div>
+          {!hideLinks && (
+            <>
+              <div className="hidden lg:flex items-center justify-center">
+                <div className="relative flex items-center gap-1 rounded-full border border-white/12 bg-white/8 p-1.5 backdrop-blur-sm">
+                  {NAV_LINKS.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setActiveLink(link.name)}
+                      onMouseEnter={() => setHoveredLink(link.name)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      className="relative z-10 rounded-full px-4 py-2.5 text-sm font-semibold tracking-[0.16em] text-white/86 uppercase transition-colors hover:text-white"
+                    >
+                      <span className="relative z-10">{link.name}</span>
+                      {highlightedLink === link.name && (
+                        <motion.div
+                          layoutId="nav-pill"
+                          className="absolute inset-0 rounded-full bg-white/14"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ type: "spring", bounce: 0.18, duration: 0.45 }}
+                        />
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden flex justify-end items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none p-2 hover:bg-white/10 rounded-full transition-colors"
-            >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+              <div className="hidden lg:flex items-center justify-end">
+                <Link href="/#plan" className="rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white shadow-lg shadow-black/15 transition-all hover:bg-gold/90 hover:-translate-y-0.5 active:translate-y-0">
+                  Book Now
+                </Link>
+              </div>
+
+              <div className="lg:hidden flex items-center justify-end">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors hover:bg-white/16 focus:outline-none"
+                >
+                  {isOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && !hideLinks && (
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="mx-4 mt-4 overflow-hidden rounded-[2.5rem] border border-white/10 bg-forest/95 shadow-2xl lg:hidden backdrop-blur-xl"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="border-t border-white/10 bg-kivu-blue lg:hidden"
           >
-            <div className="px-6 pt-8 pb-10 space-y-4 text-center">
-              {navLinks.map((link, idx) => (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="overflow-hidden rounded-b-[1.75rem] border-x border-b border-white/8 bg-[#155a75] px-5 py-5 shadow-[0_18px_40px_rgba(10,35,46,0.16)]">
+                <div className="mb-4 rounded-[1.25rem] border border-white/8 bg-white/[0.04] px-4 py-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">Navigation</p>
+                  <p className="mt-1 text-xs leading-5 text-white/55">Browse the site clearly from one place.</p>
+                </div>
+                {NAV_LINKS.map((link, idx) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.04 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => {
+                        setActiveLink(link.name);
+                        setIsOpen(false);
+                      }}
+                      className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] transition-all ${activeLink === link.name ? 'bg-white/12 text-gold shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]' : 'text-white hover:bg-white/10 hover:text-gold'}`}
+                    >
+                      {link.name}
+                      <span className="text-white/30">/</span>
+                    </Link>
+                  </motion.div>
+                ))}
                 <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.22 }}
+                  className="pt-4"
                 >
                   <Link
-                    href={link.href}
+                    href="/#plan"
                     onClick={() => setIsOpen(false)}
-                    className="block text-white hover:text-gold py-3 text-xl font-medium border-b border-white/5 last:border-0 transition-colors uppercase tracking-widest"
+                    className="block rounded-2xl bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-black/15 transition-all hover:bg-gold/90"
                   >
-                    {link.name}
+                    Book Now
                   </Link>
                 </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="pt-6"
-              >
-                <Link
-                  href="/#plan"
-                  onClick={() => setIsOpen(false)}
-                  className="btn-gold block text-center py-4 rounded-2xl text-lg uppercase tracking-widest shadow-2xl"
-                >
-                  Book Now
-                </Link>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
-      />
     </nav>
   );
 };

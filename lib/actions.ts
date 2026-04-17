@@ -13,6 +13,7 @@ import {
   updateTestimonialInDb,
   updateTourInDb,
 } from "@/lib/content";
+import { slugify } from "./slug";
 
 cloudinary.config({
   cloudinary_url: process.env.CLOUDINARY_URL,
@@ -73,7 +74,12 @@ export async function getTourBySlug(slug: string) {
 
 export async function createTour(data: any) {
   try {
-    const tour = await createTourInDb(data);
+    // Sanitize slug
+    const sanitizedData = {
+      ...data,
+      slug: slugify(data.slug),
+    };
+    const tour = await createTourInDb(sanitizedData);
     revalidatePath("/");
     revalidatePath("/tours");
     return { success: true, tour };
@@ -85,7 +91,12 @@ export async function createTour(data: any) {
 
 export async function updateTour(slug: string, data: any) {
   try {
-    const tour = await updateTourInDb(slug, data);
+    // Sanitize slug
+    const sanitizedData = {
+      ...data,
+      slug: data.slug ? slugify(data.slug) : undefined,
+    };
+    const tour = await updateTourInDb(slug, sanitizedData);
     revalidatePath("/");
     revalidatePath("/tours");
     revalidatePath(`/tours/${slug}`);

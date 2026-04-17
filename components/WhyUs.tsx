@@ -29,10 +29,20 @@ const WhyUs = () => {
   ];
 
   return (
-    <section id="why-us" className="py-20 bg-forest text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="why-us" className="py-24 bg-kivu-blue text-white relative overflow-hidden">
+      {/* Abstract background pattern */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,#ffffff_0%,transparent_50%)]" />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Why Travel With Turacos Tours?</h2>
+          <span className="text-gold font-bold uppercase tracking-[0.4em] text-xs mb-4 block">
+            The Turacos Advantage
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
+            Why Explore With Us?
+          </h2>
           <div className="w-24 h-1 bg-gold mx-auto rounded-full" />
         </div>
 

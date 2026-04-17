@@ -24,8 +24,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (identity: string, password: string): boolean => {
     // Simple admin check: phone/email and password
     // NOTE: In a real app, this would be a server-side verification
-    const validIdentities = ['admin@turacostours.rw', '+250788000000', 'admin'];
-    const validPassword = 'Admin123!';
+    const validIdentities = ['+250793622438'];
+    const validPassword = 'Turacos@079';
 
     if (validIdentities.includes(identity) && password === validPassword) {
       setIsAdmin(true);

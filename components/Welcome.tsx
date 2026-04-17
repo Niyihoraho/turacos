@@ -16,7 +16,7 @@ const Welcome = () => {
     <section id="welcome" className="relative py-24 bg-cream overflow-hidden">
       {/* Decorative background element */}
       <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
-        <svg viewBox="0 0 100 100" className="w-full h-full text-forest">
+        <svg viewBox="0 0 100 100" className="w-full h-full text-kivu-blue">
           <path d="M10,90 Q50,0 90,90" fill="none" stroke="currentColor" strokeWidth="0.5" />
           <path d="M20,80 Q50,10 80,80" fill="none" stroke="currentColor" strokeWidth="0.5" />
         </svg>
@@ -33,7 +33,7 @@ const Welcome = () => {
           >
             <div className="space-y-2 mb-6">
               <span className="text-gold font-semibold tracking-widest uppercase text-sm">Explore Our Story</span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-forest leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-kivu-blue leading-tight">
                 Welcome to <br />
                 <span className="text-charcoal italic">Turacos Tours</span>
               </h2>
@@ -56,7 +56,7 @@ const Welcome = () => {
                   <div className="text-gold mb-3 transition-transform group-hover:scale-110 duration-300">
                     {stat.icon}
                   </div>
-                  <div className="text-2xl font-bold text-forest">{stat.value}</div>
+                  <div className="text-2xl font-bold text-kivu-blue">{stat.value}</div>
                   <div className="text-xs text-charcoal/60 uppercase tracking-widest font-semibold mt-1">{stat.label}</div>
                 </motion.div>
               ))}
@@ -85,11 +85,11 @@ const Welcome = () => {
 
             {/* Accent Decoration */}
             <div className="absolute -bottom-8 -left-8 w-48 h-48 bg-gold/10 rounded-full blur-3xl z-0" />
-            <div className="absolute -top-8 -right-8 w-64 h-64 bg-forest/5 rounded-full blur-3xl z-0" />
+            <div className="absolute -top-8 -right-8 w-64 h-64 bg-kivu-blue/5 rounded-full blur-3xl z-0" />
             
             {/* Elegant Info Overlay */}
             <div className="absolute -bottom-6 -right-6 lg:right-6 bg-white p-6 rounded-2xl shadow-xl z-20 max-w-xs border border-gold/10">
-              <p className="text-sm font-serif italic text-forest leading-relaxed">
+              <p className="text-sm font-serif italic text-kivu-blue leading-relaxed">
                 "We don't just guide you through Rwanda; we open the heart of the Heart of Africa for you."
               </p>
               <div className="mt-4 flex items-center gap-2">

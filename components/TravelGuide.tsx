@@ -13,20 +13,20 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
   return (
-    <div className="border-b border-charcoal/10">
+    <div className="border-b border-sand/90 last:border-b-0">
       <button
         onClick={onClick}
-        className="w-full py-6 flex items-center justify-between text-left focus:outline-none group"
+        className="flex w-full items-center justify-between py-6 text-left focus:outline-none group"
       >
-        <span className="text-lg font-bold text-forest group-hover:text-gold transition-colors">
+        <span className="pr-6 text-lg font-semibold text-kivu-blue transition-colors group-hover:text-gold">
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className="text-gold"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-sand bg-white text-gold shadow-sm"
         >
-          <ChevronDown size={24} />
+          <ChevronDown size={18} />
         </motion.div>
       </button>
       <AnimatePresence>
@@ -38,7 +38,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="pb-6 text-charcoal/70 leading-relaxed">
+            <p className="pb-6 pr-12 text-base leading-7 text-charcoal/70">
               {answer}
             </p>
           </motion.div>
@@ -75,16 +75,17 @@ const TravelGuide = () => {
   ];
 
   return (
-    <section id="guide" className="py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Rwanda Travel Guide</h2>
-          <p className="section-subtitle">
-            Everything you need to know before your trip
+    <section id="guide" className="bg-white py-24">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">Travel Guide</p>
+          <h2 className="font-serif text-4xl font-bold text-kivu-blue md:text-5xl">Rwanda Travel Guide</h2>
+          <p className="mt-4 text-base leading-7 text-charcoal/65">
+            Clear answers to the questions most travelers ask before they arrive.
           </p>
         </div>
 
-        <div className="bg-cream/30 rounded-3xl p-6 md:p-10 shadow-sm border border-charcoal/5">
+        <div className="rounded-[2rem] border border-sand bg-[#fcfaf6] p-6 shadow-sm md:p-8">
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}

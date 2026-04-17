@@ -9,10 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        forest: '#1a4731',
+        'kivu-blue': '#1a6b8a',
+        'kivu-teal': '#2a9d8f',
         gold: '#c9a84c',
-        cream: '#f9f6f0',
+        cream: '#f4f8f9',
         charcoal: '#1c1c1c',
+        sand: '#e8dcc8',
       },
       fontFamily: {
         serif: ['var(--font-playfair)', 'serif'],

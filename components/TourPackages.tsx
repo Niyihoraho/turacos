@@ -23,8 +23,8 @@ const TourPackages = ({ tours }: TourPackagesProps) => {
 
   return (
     <section id="tours" className="py-24 bg-white relative overflow-hidden">
-      {/* Decorative texture or background (e.g., subtle green glow) */}
-      <div className="absolute -top-64 -left-64 w-[600px] h-[600px] bg-forest/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Decorative texture or background (e.g., subtle blue glow) */}
+      <div className="absolute -top-64 -left-64 w-[600px] h-[600px] bg-kivu-blue/5 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -32,7 +32,7 @@ const TourPackages = ({ tours }: TourPackagesProps) => {
             <span className="text-gold font-bold uppercase tracking-[0.4em] text-xs mb-4 block">
               Memorable Experiences
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-forest mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-kivu-blue mb-6">
               Explore Our Curated Tours
             </h2>
             <p className="text-lg text-charcoal/70 max-w-2xl font-light leading-relaxed">
@@ -43,7 +43,7 @@ const TourPackages = ({ tours }: TourPackagesProps) => {
           {isAdmin && (
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="group flex items-center gap-3 px-8 py-4 bg-forest text-white rounded-2xl font-bold hover:shadow-xl hover:shadow-forest/20 transition-all duration-300 transform active:scale-95 border-b-4 border-forest-dark"
+              className="group flex items-center gap-3 px-8 py-4 bg-kivu-blue text-white rounded-2xl font-bold hover:shadow-xl hover:shadow-kivu-blue/20 transition-all duration-300 transform active:scale-95 border-b-4 border-kivu-blue/20"
             >
               <div className="bg-white/20 p-1 rounded-lg group-hover:rotate-90 transition-transform duration-300">
                 <Plus className="w-5 h-5 text-white" />
@@ -53,15 +53,23 @@ const TourPackages = ({ tours }: TourPackagesProps) => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
-          {tours.map((tour, index) => (
-            <TourCard 
-              key={tour.slug} 
-              tour={tour} 
-              onEdit={setEditingTour}
-              onDelete={setDeletingTour}
-            />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {tours.map((tour, index) => {
+            const isLakeKivu = tour.title.toLowerCase().includes('lake kivu');
+            const activities = isLakeKivu 
+              ? ["🚴 Cycling", "⛵ Boat Trips", "🏝️ Island Visits", "☕ Coffee Experiences", "🥾 Hiking"]
+              : [];
+              
+            return (
+              <TourCard 
+                key={tour.slug} 
+                tour={tour} 
+                activities={activities}
+                onEdit={setEditingTour}
+                onDelete={setDeletingTour}
+              />
+            );
+          })}
           {tours.length === 0 && (
             <div className="col-span-full py-20 text-center bg-stone-50 rounded-3xl border-2 border-dashed border-stone-200">
               <p className="text-stone-400">No tour packages found. Add your first one!</p>

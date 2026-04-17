@@ -1,4 +1,4 @@
-// File: C:\Users\user\Downloads\turacos-tours\app\layout.tsx
+// File: C:\Users\user\Pictures\turacos-tours\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

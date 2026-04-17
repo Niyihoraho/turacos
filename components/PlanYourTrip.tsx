@@ -1,192 +1,114 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-
-interface FormData {
-  name: string;
-  country: string;
-  flag: string;
-  quote: string;
-}
+import { motion, AnimatePresence } from 'framer-motion';
 
 const PlanYourTrip = () => {
-  const [submitted, setSubmitted] = useState(false);
-  const [rating, setRating] = useState(5);
-  const [hover, setHover] = useState(0);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
-  const router = useRouter();
-
-  const onSubmit = async (data: FormData) => {
-    try {
-      const response = await fetch('/api/testimonials', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...data,
-          stars: rating,
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        reset();
-        setRating(5);
-        router.refresh();
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error || 'Failed to submit feedback'}`);
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert('An error occurred while submitting your feedback.');
-    }
-  };
+  const [isPolicyExpanded, setIsPolicyExpanded] = useState(false);
 
   return (
-    <section id="plan" className="relative py-24 overflow-hidden">
-      {/* Background Image */}
-      <Image 
-        src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600"
-        alt="Gorilla in Rwanda"
-        fill
-        className="object-cover"
-        referrerPolicy="no-referrer"
-      />
-      <div className="absolute inset-0 bg-forest/80 z-10" />
-
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text Content */}
+    <section id="plan" className="relative overflow-hidden bg-kivu-blue py-24 text-white">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 grid gap-6 rounded-[1.75rem] border border-white/10 bg-white/6 p-6 lg:grid-cols-[1.45fr_0.9fr] lg:p-8">
           <motion.div
             initial={false}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-white"
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Share Your Experience</h2>
-            <p className="text-xl text-white/80 mb-8 leading-relaxed">
-              We'd love to hear about your journey with us. Your feedback helps us grow and inspires other travelers to explore the beauty of Rwanda.
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.34em] text-gold">Turacos Tours</p>
+            <h2 className="max-w-3xl font-serif text-3xl font-bold leading-tight text-white md:text-4xl">
+              Crafted journeys across Rwanda with local insight, calm logistics, and thoughtful service.
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-white/80 md:text-base">
+              We design boutique travel experiences that feel personal, organized, and grounded in place - from Lake Kivu escapes to wildlife adventures and cultural journeys.
             </p>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <span className="bg-gold p-1 rounded-full text-white">✓</span>
-                <span>Rate your adventure</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="bg-gold p-1 rounded-full text-white">✓</span>
-                <span>Share your highlights</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="bg-gold p-1 rounded-full text-white">✓</span>
-                <span>Inspire future travelers</span>
-              </li>
-            </ul>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              {['Tailored routes', 'Local hosts', 'Smooth logistics'].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/18 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/92"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Form */}
-          <motion.div
-            initial={false}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl"
-          >
-            {submitted ? (
-              <div className="text-center py-12">
-                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-forest mb-2">Feedback Received!</h3>
-                <p className="text-charcoal/70">Thank you for sharing your experience. We truly appreciate it!</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-bold text-charcoal mb-1">Your Name *</label>
-                    <input 
-                      {...register("name", { required: "Name is required" })}
-                      className="w-full px-4 py-3 rounded-xl bg-cream/50 border border-charcoal/10 focus:border-gold outline-none transition-all"
-                      placeholder="John Doe"
-                    />
-                    {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-charcoal mb-1">Country *</label>
-                    <input 
-                      {...register("country", { required: "Country is required" })}
-                      className="w-full px-4 py-3 rounded-xl bg-cream/50 border border-charcoal/10 focus:border-gold outline-none transition-all"
-                      placeholder="e.g. United Kingdom"
-                    />
-                    {errors.country && <span className="text-red-500 text-xs mt-1">{errors.country.message}</span>}
-                  </div>
-                </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-[1.4rem] border border-white/12 bg-white/8 p-5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Base</p>
+              <p className="mt-3 text-sm leading-7 text-white/88">Rubavu, Lake Kivu, Rwanda</p>
+              <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">Western Rwanda departures</p>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
-                  <div>
-                    <label className="block text-sm font-bold text-charcoal mb-1">Country Flag (Emoji) *</label>
-                    <input 
-                      {...register("flag", { required: "Flag emoji is required" })}
-                      className="w-full px-4 py-3 rounded-xl bg-cream/50 border border-charcoal/10 focus:border-gold outline-none transition-all"
-                      placeholder="e.g. 🇬🇧"
-                    />
-                    {errors.flag && <span className="text-red-500 text-xs mt-1">{errors.flag.message}</span>}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-charcoal mb-2">Rating *</label>
-                    <div className="flex gap-2 mb-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          className="focus:outline-none transition-transform hover:scale-110"
-                          onClick={() => setRating(star)}
-                          onMouseEnter={() => setHover(star)}
-                          onMouseLeave={() => setHover(0)}
-                        >
-                          <Star 
-                            size={32} 
-                            className={`${
-                              star <= (hover || rating) 
-                                ? 'fill-gold text-gold' 
-                                : 'text-charcoal/20'
-                            } transition-colors cursor-pointer`}
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-bold text-charcoal mb-1">Your Review *</label>
-                  <textarea 
-                    {...register("quote", { required: "Review is required" })}
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-cream/50 border border-charcoal/10 focus:border-gold outline-none transition-all"
-                    placeholder="Tell us about the highlights of your trip..."
-                  />
-                  {errors.quote && <span className="text-red-500 text-xs mt-1">{errors.quote.message}</span>}
-                </div>
-
-                <button type="submit" className="btn-gold w-full py-4 text-lg">
-                  Submit My Review ✨
-                </button>
-              </form>
-            )}
-          </motion.div>
+            <div className="rounded-[1.4rem] border border-white/12 bg-white/8 p-5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Contact</p>
+              <p className="mt-3 text-sm leading-7 text-white/88">+250 793 622 438</p>
+              <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">Fast planning support</p>
+            </div>
+          </div>
         </div>
+
+        <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/6 p-5 sm:p-6">
+            <h3 className="mb-6 text-xs font-bold uppercase tracking-[0.24em] text-gold">Booking Policy</h3>
+            <div className="space-y-5 text-sm font-light leading-7 text-white/80">
+              <p>
+                <span className="mb-1 block font-semibold text-white">Standard Cancellation</span>
+                Confirmations cancelled 24 hours prior to departure are eligible for a full refund.
+              </p>
+              <p>
+                <span className="mb-1 block font-semibold text-white">Late Cancellation</span>
+                Cancellations within the 24-hour window are subject to a 50% service fee.
+              </p>
+              <p>
+                <span className="mb-1 block font-semibold text-white">No-Show Terms</span>
+                Missed departures or on-site cancellations are non-refundable.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/6 p-5 sm:p-6">
+            <h3 className="mb-6 text-xs font-bold uppercase tracking-[0.24em] text-gold">Operating Standards</h3>
+            <div className="space-y-5 text-sm font-light leading-7 text-white/80">
+              <p>
+                Itineraries are subject to professional adjustment based on adverse weather or safety protocols.
+              </p>
+              <p>
+                Tour confirmation is finalized upon verification of the required security deposit.
+              </p>
+              <button
+                onClick={() => setIsPolicyExpanded(!isPolicyExpanded)}
+                className="w-fit border-b border-gold/40 pb-1 font-bold text-gold transition-colors hover:text-white"
+              >
+                {isPolicyExpanded ? 'Less Details' : 'Full Terms & Conditions'}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {isPolicyExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/6 p-5 text-sm leading-7 text-white/72 sm:p-6">
+                <p>
+                  By proceeding with a reservation through Turacos Tours, clients acknowledge and accept all liability waivers for outdoor activities. While we maintain rigorous safety standards, participation in wildlife tracking and water activities involves inherent environmental risks.
+                </p>
+                <p className="mt-4">
+                  Special permit logistics-specifically for Mountain Gorilla encounters-are managed in accordance with Rwanda Development Board regulations. These permits are non-transferable and non-refundable once issued by the governing authorities.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

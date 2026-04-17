@@ -35,7 +35,7 @@ const BackToTop = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-[60] w-14 h-14 bg-forest text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-gold transition-colors duration-300 focus:outline-none"
+          className="fixed bottom-24 right-6 z-[60] w-14 h-14 bg-kivu-blue text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-gold transition-colors duration-300 focus:outline-none"
         >
           <ChevronUp size={32} />
         </motion.button>

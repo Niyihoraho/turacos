@@ -13,18 +13,15 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import BackToTop from '@/components/BackToTop';
 import { unstable_noStore as noStore } from 'next/cache';
-import { getTours, getTestimonials } from '@/lib/actions';
-import { tours as staticTours } from '@/data/tours';
+import { getTours } from '@/lib/actions';
+
 
 export default async function Home() {
   noStore();
 
   const dbTours = await getTours();
-  const dbTestimonials = await getTestimonials();
 
-  // Fallback to static data if DB is empty (initial setup)
-  const displayTours = dbTours && dbTours.length > 0 ? dbTours : staticTours;
-  const displayTestimonials = dbTestimonials && dbTestimonials.length > 0 ? dbTestimonials : [];
+  const displayTours = dbTours || [];
 
   return (
     <main className="min-h-screen">
@@ -36,7 +33,7 @@ export default async function Home() {
       <WhyRwanda />
       <TravelGuide />
       <OurImpact />
-      <Testimonials testimonials={displayTestimonials} />
+      <Testimonials />
       <PlanYourTrip />
       <ContactSection />
       <Footer />

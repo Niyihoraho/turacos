@@ -70,7 +70,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, tourTitle, tourSlug }: DeleteConf
 
               {/* Content */}
               <div className="px-10 pb-8 text-center">
-                <h2 className="text-2xl font-serif font-bold text-forest mb-4">
+                <h2 className="text-2xl font-serif font-bold text-kivu-blue mb-4">
                   Confirm Deletion
                 </h2>
                 <p className="text-charcoal/70 leading-relaxed mb-6">

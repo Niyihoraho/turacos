@@ -8,84 +8,99 @@ import { useAuth } from './AuthProvider';
 
 interface TourCardProps {
   tour: Tour;
+  activities?: string[];
   onEdit?: (tour: Tour) => void;
   onDelete?: (tour: Tour) => void;
 }
 
-const TourCard = ({ tour, onEdit, onDelete }: TourCardProps) => {
+const TourCard = ({ tour, activities, onEdit, onDelete }: TourCardProps) => {
   const { isAdmin } = useAuth();
+  
   return (
-    <div className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl border border-charcoal/5 transition-all duration-500 hover:-translate-y-3 relative cursor-pointer">
-      <div className="relative h-72 sm:h-80 overflow-hidden">
+    <Link href={`/tours/${tour.slug}`} className="group bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-12px_rgba(11,61,81,0.15)] border border-charcoal/5 transition-all duration-700 hover:-translate-y-3 relative cursor-pointer flex flex-col h-full max-w-sm mx-auto w-full block">
+      {/* Optimized Image Height for 3-Column Layout */}
+      <div className="relative h-52 overflow-hidden shrink-0">
         <Image
           src={tour.image}
           alt={tour.title}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md text-forest text-xs font-bold px-4 py-2 rounded-full flex items-center gap-2 shadow-sm z-10">
-          <MapPin size={14} className="text-gold" /> {tour.location}
+        
+        {/* Floating Location Tag - More Compact */}
+        <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md text-kivu-blue text-[9px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm z-10 border border-gold/10">
+          <MapPin size={10} className="text-gold" /> {tour.location.split(',')[0]}
         </div>
 
-        {/* Edit Button - Visible only to Admins */}
+        {/* Admin Controls - Smaller */}
         {isAdmin && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onEdit?.(tour);
-            }}
-            className="absolute top-6 right-20 p-3 bg-white/90 backdrop-blur-md text-forest rounded-2xl shadow-xl shadow-forest/10 hover:bg-gold hover:text-white active:scale-95 z-20 transition-all duration-300 transform"
-            title="Edit Tour Package"
-          >
-            <Pencil size={20} />
-          </button>
+          <div className="absolute top-3 right-3 flex gap-1.5 z-20">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onEdit?.(tour);
+              }}
+              className="p-2 bg-white/95 backdrop-blur-md text-kivu-blue rounded-lg shadow-md hover:bg-gold hover:text-white transition-all active:scale-90"
+            >
+              <Pencil size={14} />
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onDelete?.(tour);
+              }}
+              className="p-2 bg-white/95 backdrop-blur-md text-red-500 rounded-lg shadow-md hover:bg-red-600 hover:text-white transition-all active:scale-90"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
         )}
-
-        {/* Delete Button - Visible only to Admins */}
-        {isAdmin && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onDelete?.(tour);
-            }}
-            className="absolute top-6 right-6 p-3 bg-white/90 backdrop-blur-md text-red-500 rounded-2xl shadow-xl shadow-red-500/10 hover:bg-red-600 hover:text-white active:scale-95 z-20 transition-all duration-300 transform"
-            title="Delete Tour Package"
-          >
-            <Trash2 size={20} />
-          </button>
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
 
-      <div className="p-8">
-        <h3 className="text-2xl md:text-3xl font-serif font-bold text-forest mb-4 group-hover:text-gold transition-colors duration-300">
+      {/* Tighter Internal Padding (p-5) */}
+      <div className="flex flex-grow flex-col p-6">
+        <h3 className="mb-3 line-clamp-2 text-2xl font-serif font-bold leading-snug text-kivu-blue transition-colors duration-300 group-hover:text-gold">
           {tour.title}
         </h3>
-        <p className="text-charcoal/70 text-base leading-relaxed mb-8 line-clamp-3 font-light">
+        
+        <p className="mb-5 line-clamp-3 text-sm leading-7 text-charcoal/78 sm:text-[15px]">
           {tour.description}
         </p>
 
-        <div className="flex flex-wrap items-center gap-3 mb-8">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider font-extrabold text-forest bg-gold/10 px-4 py-2 rounded-full border border-gold/20 shadow-sm">
-            <Clock size={14} className="text-gold" /> {tour.duration}
+        {/* Minimalist Activity Chips */}
+        {activities && activities.length > 0 && (
+          <div className="mb-5 flex flex-wrap gap-2">
+            {activities.slice(0, 3).map((activity, idx) => (
+              <span 
+                key={idx}
+                className="rounded-full border border-stone-200 bg-stone-50 px-2.5 py-1 text-[10px] font-semibold text-kivu-blue/75"
+              >
+                {activity}
+              </span>
+            ))}
+            {activities.length > 3 && <span className="py-1 text-[10px] font-semibold text-stone-400">+{activities.length - 3}</span>}
           </div>
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider font-extrabold text-forest bg-gold/10 px-4 py-2 rounded-full border border-gold/20 shadow-sm">
-            <Gauge size={14} className="text-gold" /> {tour.difficulty}
+        )}
+
+        <div className="mt-auto mb-6 flex items-center justify-between border-t border-stone-100 pt-4">
+          <div className="flex gap-4">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-kivu-blue/55">
+              <Clock size={12} className="text-gold/60" /> {tour.duration.split(' ')[0]}D
+            </div>
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-kivu-blue/55">
+              <Gauge size={12} className="text-gold/60" /> {tour.difficulty}
+            </div>
           </div>
         </div>
 
-        <Link
-          href={`/tours/${tour.slug}`}
-          className="group/btn flex items-center justify-between w-full py-4 px-6 bg-forest text-white font-bold rounded-2xl hover:bg-gold transition-all duration-300 shadow-md"
-        >
-          <span>View Detailed Package</span>
-          <ArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
-        </Link>
+        <div className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-kivu-blue px-4 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-sm transition-all duration-300 hover:bg-gold cursor-pointer">
+          <span>Explore Package</span>
+          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

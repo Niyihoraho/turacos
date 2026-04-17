@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Loader2, Image as ImageIcon, MapPin, Clock, Gauge, DollarSign, FileText, Upload, CheckCircle2 } from 'lucide-react';
 import { createTour, uploadImage } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
+import { slugify } from '@/lib/slug';
 
 interface AddTourModalProps {
   isOpen: boolean;
@@ -63,9 +64,10 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
 
     const payload = {
       ...data,
+      slug: slugify(data.slug), // Final sanitization
       duration: "4-7 Days", // Default
       difficulty: "Moderate", // Default
-      price: "From $1,500/person", // Default
+      price: "From Discussed", // Default
       contactMessage: `Hello, I'm interested in the ${data.title} package.`, // Default
       highlights: ["Expert local guide", "Private transport", "Cultural visit"], // Default
       includes: ["Accommodation", "Breakfast", "Transport", "Guide fees"], // Default
@@ -88,8 +90,8 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
     }
   };
 
-  const inputClasses = "w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-charcoal outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest transition-all placeholder:text-stone-400";
-  const labelClasses = "block text-sm font-semibold text-forest mb-1.5 flex items-center gap-2";
+  const inputClasses = "w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-charcoal outline-none focus:ring-2 focus:ring-kivu-blue/20 focus:border-kivu-blue transition-all placeholder:text-stone-400";
+  const labelClasses = "block text-sm font-semibold text-kivu-blue mb-1.5 flex items-center gap-2";
 
   return (
     <AnimatePresence>
@@ -101,7 +103,7 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-forest/40 backdrop-blur-sm z-[999]"
+            className="fixed inset-0 bg-kivu-blue/40 backdrop-blur-sm z-[999]"
           />
 
           {/* Modal Container */}
@@ -113,7 +115,7 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
               className="bg-white w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl shadow-2xl pointer-events-auto flex flex-col"
             >
               {/* Header */}
-              <div className="p-6 border-b border-stone-100 flex items-center justify-between bg-gradient-to-r from-forest to-forest-light text-white">
+              <div className="p-6 border-b border-stone-100 flex items-center justify-between bg-gradient-to-r from-kivu-blue to-kivu-teal text-white">
                 <div>
                   <h2 className="text-2xl font-serif font-bold">Add New Tour Package</h2>
                   <p className="text-white/70 text-sm">Expand your curated collection</p>
@@ -140,7 +142,17 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
                     <div className="md:col-span-2">
                       <label className={labelClasses}><FileText className="w-4 h-4" /> Tour Title</label>
                       <input
-                        {...register("title", { required: "Title is required" })}
+                        {...register("title", { 
+                          required: "Title is required",
+                          onChange: (e) => {
+                            const val = e.target.value;
+                            const currentSlug = watch("slug");
+                            // Auto-generate slug from title ONLY if slug is currently empty or was previously auto-generated from title
+                            if (!currentSlug || currentSlug === slugify(watch("title"))) {
+                              setValue("slug", slugify(val));
+                            }
+                          }
+                        })}
                         placeholder="e.g., Akagera Savannah Adventure"
                         className={inputClasses}
                       />
@@ -151,7 +163,12 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
                     <div>
                       <label className={labelClasses}>Slug (URL ID)</label>
                       <input
-                        {...register("slug", { required: "Slug is required" })}
+                        {...register("slug", { 
+                          required: "Slug is required",
+                          onChange: (e) => {
+                            setValue("slug", slugify(e.target.value));
+                          }
+                        })}
                         placeholder="akagera-adventure"
                         className={inputClasses}
                       />
@@ -175,12 +192,12 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
                       
                       <div className="relative">
                         {!imageUrl ? (
-                          <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-stone-200 rounded-3xl cursor-pointer bg-stone-50 hover:bg-stone-100/50 hover:border-forest/30 transition-all group">
+                          <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-stone-200 rounded-3xl cursor-pointer bg-stone-50 hover:bg-stone-100/50 hover:border-kivu-blue/30 transition-all group">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
                               {isUploading ? (
-                                <Loader2 className="w-10 h-10 text-forest/40 animate-spin mb-3" />
+                                <Loader2 className="w-10 h-10 text-kivu-blue/40 animate-spin mb-3" />
                               ) : (
-                                <Upload className="w-10 h-10 text-stone-300 group-hover:text-forest/40 mb-3 transition-colors" />
+                                <Upload className="w-10 h-10 text-stone-300 group-hover:text-kivu-blue/40 mb-3 transition-colors" />
                               )}
                               <p className="mb-2 text-sm text-stone-500">
                                 <span className="font-semibold">{isUploading ? "Uploading..." : "Click to upload"}</span> or drag and drop
@@ -202,20 +219,20 @@ const AddTourModal = ({ isOpen, onClose }: AddTourModalProps) => {
                               alt="Tour preview" 
                               className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-forest/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <div className="absolute inset-0 bg-kivu-blue/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                               <button
                                 type="button"
                                 onClick={() => {
                                   setValue("image", "");
                                   setUploadSuccess(false);
                                 }}
-                                className="bg-white text-forest p-3 rounded-2xl font-bold shadow-xl hover:scale-110 transition-transform flex items-center gap-2"
+                                className="bg-white text-kivu-blue p-3 rounded-2xl font-bold shadow-xl hover:scale-110 transition-transform flex items-center gap-2"
                               >
                                 <X className="w-5 h-5" /> Change Image
                               </button>
                             </div>
                             {uploadSuccess && (
-                              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-forest px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 shadow-lg border border-forest/10 animate-in fade-in zoom-in duration-300">
+                              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-kivu-blue px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 shadow-lg border border-kivu-blue/10 animate-in fade-in zoom-in duration-300">
                                 <CheckCircle2 className="w-4 h-4" /> Uploaded Successfully
                               </div>
                             )}
