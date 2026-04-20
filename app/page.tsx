@@ -11,10 +11,8 @@ import PlanYourTrip from '@/components/PlanYourTrip';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import BackToTop from '@/components/BackToTop';
 import { unstable_noStore as noStore } from 'next/cache';
 import { getTours } from '@/lib/actions';
-
 
 export default async function Home() {
   noStore();
@@ -38,7 +36,7 @@ export default async function Home() {
       <ContactSection />
       <Footer />
       <WhatsAppButton />
-      <BackToTop />
     </main>
   );
 }
+

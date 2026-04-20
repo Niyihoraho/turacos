@@ -3,15 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Users, Calendar, MapPin } from 'lucide-react';
 
 const Welcome = () => {
-  const stats = [
-    { label: "Happy Travelers", value: "500+", icon: <Users className="w-5 h-5" /> },
-    { label: "Years Experience", value: "10+", icon: <Calendar className="w-5 h-5" /> },
-    { label: "Local Guides", value: "100%", icon: <MapPin className="w-5 h-5" /> },
-  ];
-
   return (
     <section id="welcome" className="relative py-24 bg-cream overflow-hidden">
       {/* Decorative background element */}
@@ -42,25 +35,6 @@ const Welcome = () => {
             <p className="text-lg md:text-xl text-charcoal/70 leading-relaxed mb-10 font-light">
               Turacos Tours is a locally owned Rwandan tour company passionate about sharing the incredible beauty of our country. We specialize in wildlife safaris, gorilla tracking, and cultural immersions. Our expert local guides bring Rwanda's stories, landscapes, and wildlife to life — creating memories that last a lifetime.
             </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {stats.map((stat, index) => (
-                <motion.div 
-                  key={index} 
-                  initial={false}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + index * 0.1 }}
-                  className="group bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-gold/20 shadow-sm hover:shadow-md transition-all duration-300"
-                >
-                  <div className="text-gold mb-3 transition-transform group-hover:scale-110 duration-300">
-                    {stat.icon}
-                  </div>
-                  <div className="text-2xl font-bold text-kivu-blue">{stat.value}</div>
-                  <div className="text-xs text-charcoal/60 uppercase tracking-widest font-semibold mt-1">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
 
           {/* Image Collage Section */}

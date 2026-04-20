@@ -17,7 +17,7 @@ export const tours: Tour[] = [
   {
     slug: 'lake-kivu-experience',
     title: 'Lake Kivu Experience',
-    location: 'Rubavu & Karongi, Rwanda',
+    location: 'Karongi (Kibuye) & Lake Kivu, Rwanda',
     image: '/images/hero-lake-kivu.png',
     gallery: ['/images/hero-lake-kivu.png'],
     description:

@@ -66,7 +66,7 @@ const TourCard = ({ tour, activities, onEdit, onDelete }: TourCardProps) => {
           {tour.title}
         </h3>
         
-        <p className="mb-5 line-clamp-3 text-sm leading-7 text-charcoal/78 sm:text-[15px]">
+        <p className="mb-5 line-clamp-3 text-sm leading-7 text-charcoal/78 sm:text-[15px] whitespace-pre-wrap">
           {tour.description}
         </p>
 

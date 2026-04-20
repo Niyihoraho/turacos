@@ -40,7 +40,7 @@ const PlanYourTrip = () => {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-[1.4rem] border border-white/12 bg-white/8 p-5">
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Base</p>
-              <p className="mt-3 text-sm leading-7 text-white/88">Rubavu, Lake Kivu, Rwanda</p>
+              <p className="mt-3 text-sm leading-7 text-white/88">Kibuye, Lake Kivu, Rwanda</p>
               <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/60">Western Rwanda departures</p>
             </div>
 

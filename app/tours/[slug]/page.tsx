@@ -28,7 +28,7 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
     notFound();
   }
 
-  const whatsappUrl = `https://wa.me/250788000000?text=${encodeURIComponent(tour.contactMessage)}`;
+  const whatsappUrl = `https://wa.me/250793622438?text=${encodeURIComponent(tour.contactMessage)}`;
   const summaryItems = [
     { label: 'Location', value: tour.location, icon: MapPin },
     { label: 'Duration', value: tour.duration, icon: Clock },
@@ -45,13 +45,13 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
             <ArrowLeft size={14} /> Back to tours
           </Link>
 
-          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
             <div className="rounded-[2rem] border border-sand bg-white p-6 shadow-[0_18px_50px_rgba(0,0,0,0.05)] sm:p-8">
               <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">Tour Detail</p>
               <h1 className="font-serif text-4xl font-bold leading-tight text-kivu-blue md:text-5xl">
                 {tour.title}
               </h1>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-charcoal/68">
+              <p className="mt-5 max-w-2xl text-base leading-7 text-charcoal/68 whitespace-pre-wrap">
                 {tour.description}
               </p>
 
@@ -65,7 +65,7 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
                         <Icon size={18} className="text-gold" />
                       </div>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-kivu-blue/55">{item.label}</p>
-                      <p className="mt-2 text-sm font-semibold text-kivu-blue">{item.value}</p>
+                      <p className="mt-2 text-sm font-semibold text-kivu-blue break-words">{item.value}</p>
                     </div>
                   );
                 })}
@@ -83,7 +83,7 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
               </div>
             </div>
 
-            <div className="relative min-h-[320px] overflow-hidden rounded-[2rem] border border-sand bg-white shadow-[0_18px_50px_rgba(0,0,0,0.05)]">
+            <div className="relative h-[350px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden rounded-[2rem] border border-sand bg-white shadow-[0_18px_50px_rgba(0,0,0,0.05)] lg:sticky lg:top-28">
               <Image
                 src={tour.image}
                 alt={tour.title}
@@ -106,7 +106,7 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
               <div className="mb-14 rounded-[2rem] border border-sand bg-white p-6 shadow-sm sm:p-8">
                 <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">Overview</p>
                 <h2 className="mb-6 font-serif text-3xl font-bold text-kivu-blue md:text-4xl">Overview of the journey</h2>
-                <p className="text-base leading-8 text-charcoal/75 md:text-lg">
+                <p className="text-base leading-8 text-charcoal/75 md:text-lg whitespace-pre-wrap">
                   {tour.description}
                 </p>
               </div>
@@ -144,11 +144,11 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
                 </p>
 
                 <div className="mt-6 space-y-3">
-                  <a href="tel:+250788000000" className="flex items-center gap-4 rounded-[1.5rem] border border-sand bg-[#fcfaf6] px-5 py-4 text-sm font-semibold text-kivu-blue transition-colors hover:border-gold/40">
+                  <a href="tel:+250793622438" className="flex items-center gap-4 rounded-[1.5rem] border border-sand bg-[#fcfaf6] px-5 py-4 text-sm font-semibold text-kivu-blue transition-colors hover:border-gold/40">
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm">
                       <Phone size={16} className="text-gold" />
                     </span>
-                    +250 788 000 000
+                    +250 793 622 438
                   </a>
                   <a
                     href={whatsappUrl}

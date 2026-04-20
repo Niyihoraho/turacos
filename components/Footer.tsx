@@ -66,7 +66,7 @@ const Footer = () => {
             <div>
               <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Inquiries</h4>
               <div className="space-y-3 text-sm font-light text-white/80">
-                <p>Rubavu &bull; Lake Kivu &bull; Rwanda</p>
+                <p>Kibuye &bull; Lake Kivu &bull; Rwanda</p>
                 <p>+250 793 622 438</p>
                 <p>8 AM &ndash; 6 PM Local</p>
                 <div className="flex flex-wrap gap-3 pt-2 text-[11px] font-semibold uppercase tracking-[0.18em]">

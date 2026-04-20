@@ -28,8 +28,8 @@ const ContactSection = () => {
     },
     {
       title: 'Location',
-      value: 'Rubavu, Lake Kivu, Rwanda',
-      href: 'https://www.google.com/maps/search/?api=1&query=-1.6772,29.3466',
+      value: 'Kibuye, Lake Kivu, Rwanda',
+      href: 'https://maps.app.goo.gl/Ux7dBs74LM14RcVb7',
       icon: MapPin,
     },
   ];
@@ -129,10 +129,10 @@ const ContactSection = () => {
               <div className="mb-4 flex items-center justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold">Map</p>
-                  <h3 className="mt-2 text-2xl font-serif font-bold text-kivu-blue">Visit our base in Rubavu</h3>
+                  <h3 className="mt-2 text-2xl font-serif font-bold text-kivu-blue">Visit our base in Kibuye</h3>
                 </div>
                 <a
-                  href="https://www.google.com/maps/place/TURACOS+TOURS+LAKE+KIVU+BOAT+%26+KAYAKING/@-2.0616875,29.3521875,17z/data=!3m1!4b1!4m6!3m5!1s0x19dd2921b12b9f59:0x9855c014bbce9004!8m2!3d-2.0616875!4d29.3521875!16s%2Fg%2F11y5fty5n2"
+                  href="https://maps.app.goo.gl/Ux7dBs74LM14RcVb7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hidden rounded-full border border-sand px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-kivu-blue transition-colors hover:border-gold hover:text-gold sm:inline-flex"
@@ -143,22 +143,22 @@ const ContactSection = () => {
 
               <div className="relative h-[380px] overflow-hidden rounded-[1.5rem] border border-sand">
                 <iframe
-                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63799.41!2d29.3466!3d-1.6772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zLTEuNjc3MiwgMjkuMzQ2Ng!5e0!3m2!1sen!2srw!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                 referrerPolicy="no-referrer-when-downgrade"
-                className="h-full w-full"
-                title="Turacos Tours location map"
-               />
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.235659885145!2d29.3521875!3d-2.0616875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dd2921b12b9f59%3A0x9855c014bbce9004!2sTURACOS%20TOURS%20LAKE%20KIVU%20BOAT%20%26%20KAYAKING!5e0!3m2!1sen!2srw!4v1713644400000!5m2!1sen!2srw"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full w-full"
+                  title="Turacos Tours location map"
+                />
               </div>
 
               <div className="mt-4 flex flex-col gap-3 text-sm text-charcoal/65 sm:flex-row sm:items-center sm:justify-between">
-                <p>Rubavu, Lake Kivu - easy to reach and close to western Rwanda experiences.</p>
+                <p>Kibuye, Lake Kivu - easy to reach and close to western Rwanda experiences.</p>
                 <a
-                  href="https://www.google.com/maps/place/TURACOS+TOURS+LAKE+KIVU+BOAT+%26+KAYAKING/@-2.0616875,29.3521875,17z/data=!3m1!4b1!4m6!3m5!1s0x19dd2921b12b9f59:0x9855c014bbce9004!8m2!3d-2.0616875!4d29.3521875!16s%2Fg%2F11y5fty5n2"
+                  href="https://maps.app.goo.gl/Ux7dBs74LM14RcVb7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-semibold text-kivu-blue transition-colors hover:text-gold"
