@@ -83,3 +83,13 @@ export async function deleteTestimonialInDb(id: string) {
     where: { id },
   });
 }
+export async function createTripRequestInDb(data: {
+  name: string;
+  email: string;
+  phone: string;
+  travelers: number;
+  preferredDates?: string;
+  details: string;
+}) {
+  return prisma.tripRequest.create({ data });
+}

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Clock, Gauge, MapPin, Trash2, Pencil } from 'lucide-react';
+import { ArrowRight, MapPin, Trash2, Pencil } from 'lucide-react';
 import type { Tour } from '@/data/tours';
 import { useAuth } from './AuthProvider';
 
@@ -84,18 +84,6 @@ const TourCard = ({ tour, activities, onEdit, onDelete }: TourCardProps) => {
             {activities.length > 3 && <span className="py-1 text-[10px] font-semibold text-stone-400">+{activities.length - 3}</span>}
           </div>
         )}
-
-        <div className="mt-auto mb-6 flex items-center justify-between border-t border-stone-100 pt-4">
-          <div className="flex gap-4">
-            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-kivu-blue/55">
-              <Clock size={12} className="text-gold/60" /> {tour.duration.split(' ')[0]}D
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-kivu-blue/55">
-              <Gauge size={12} className="text-gold/60" /> {tour.difficulty}
-            </div>
-          </div>
-        </div>
-
         <div className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-kivu-blue px-4 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-sm transition-all duration-300 hover:bg-gold cursor-pointer">
           <span>Explore Package</span>
           <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />

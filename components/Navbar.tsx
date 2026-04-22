@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import PlanTripModal from './PlanTripModal';
 
 interface NavbarProps {
   hideLinks?: boolean;
@@ -24,6 +25,7 @@ const Navbar = ({ hideLinks = false }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [activeLink, setActiveLink] = useState('Home');
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const pathname = usePathname();
 
   const highlightedLink = hoveredLink ?? activeLink;
@@ -130,9 +132,12 @@ const Navbar = ({ hideLinks = false }: NavbarProps) => {
               </div>
 
               <div className="hidden lg:flex items-center justify-end">
-                <Link href="/#plan" className="rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white shadow-lg shadow-black/15 transition-all hover:bg-gold/90 hover:-translate-y-0.5 active:translate-y-0">
+                <button 
+                  onClick={() => setIsPlanModalOpen(true)}
+                  className="rounded-full bg-gold px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white shadow-lg shadow-black/15 transition-all hover:bg-gold/90 hover:-translate-y-0.5 active:translate-y-0"
+                >
                   Book Now
-                </Link>
+                </button>
               </div>
 
               <div className="lg:hidden flex items-center justify-end">
@@ -191,13 +196,15 @@ const Navbar = ({ hideLinks = false }: NavbarProps) => {
                   transition={{ delay: 0.22 }}
                   className="pt-4"
                 >
-                  <Link
-                    href="/#plan"
-                    onClick={() => setIsOpen(false)}
-                    className="block rounded-2xl bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-black/15 transition-all hover:bg-gold/90"
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      setIsPlanModalOpen(true);
+                    }}
+                    className="w-full block rounded-2xl bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-black/15 transition-all hover:bg-gold/90"
                   >
                     Book Now
-                  </Link>
+                  </button>
                 </motion.div>
               </div>
             </div>
@@ -205,6 +212,10 @@ const Navbar = ({ hideLinks = false }: NavbarProps) => {
         )}
       </AnimatePresence>
 
+      <PlanTripModal 
+        isOpen={isPlanModalOpen} 
+        onClose={() => setIsPlanModalOpen(false)} 
+      />
     </nav>
   );
 };

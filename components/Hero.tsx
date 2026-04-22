@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import PlanTripModal from './PlanTripModal';
 
 const SLIDES = [
   {
@@ -41,6 +42,7 @@ const SLIDES = [
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1); // 1 for next, -1 for prev
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
 
   const slideNext = useCallback(() => {
     setDirection(1);
@@ -137,12 +139,12 @@ const Hero = () => {
               <span className="relative z-10">Explore Experiences</span>
               <ChevronRight className="absolute right-4 translate-x-2 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" size={18} />
             </a>
-            <a
-              href="#plan"
+            <button
+              onClick={() => setIsPlanModalOpen(true)}
               className="h-14 flex items-center justify-center rounded-full border border-white/30 bg-white/5 px-10 text-sm font-bold uppercase tracking-widest text-white backdrop-blur-md transition-all hover:bg-white hover:text-charcoal"
             >
               Plan Your Trip
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>
@@ -183,13 +185,10 @@ const Hero = () => {
       </div>
 
       {/* Scroll Down Hint */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 text-white/30"
-      >
-        <ChevronDown size={28} strokeWidth={1} />
-      </motion.div>
+      <PlanTripModal 
+        isOpen={isPlanModalOpen} 
+        onClose={() => setIsPlanModalOpen(false)} 
+      />
     </section>
   );
 };

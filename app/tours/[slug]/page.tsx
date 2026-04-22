@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { unstable_noStore as noStore } from 'next/cache';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, Check, Clock, Gauge, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { ArrowLeft, Check, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -31,8 +31,6 @@ export default async function TourDetailsPage({ params }: TourDetailsPageProps) 
   const whatsappUrl = `https://wa.me/250793622438?text=${encodeURIComponent(tour.contactMessage)}`;
   const summaryItems = [
     { label: 'Location', value: tour.location, icon: MapPin },
-    { label: 'Duration', value: tour.duration, icon: Clock },
-    { label: 'Difficulty', value: tour.difficulty, icon: Gauge },
   ];
 
   return (

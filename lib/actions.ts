@@ -12,8 +12,10 @@ import {
   listTours,
   updateTestimonialInDb,
   updateTourInDb,
+  createTripRequestInDb,
 } from "@/lib/content";
 import { slugify } from "./slug";
+import { Resend } from 'resend';
 
 cloudinary.config({
   cloudinary_url: process.env.CLOUDINARY_URL,
@@ -173,5 +175,56 @@ export async function deleteTestimonial(id: string) {
   } catch (error) {
     console.error(`Error deleting testimonial with id ${id}:`, error);
     return { success: false, error: "Failed to delete testimonial" };
+  }
+}
+
+export async function sendPlanTripRequest(data: {
+  name: string;
+  email: string;
+  phone: string;
+  travelers: number;
+  preferredDates?: string;
+  details: string;
+}) {
+  try {
+    // 1. Save to database
+    await createTripRequestInDb(data);
+
+    // 2. Send email via Resend
+    // Note: 'onboarding@resend.dev' works for the account's registered email.
+    // For production, use a verified domain.
+    if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: 'kaziyabwanaakenga@gmail.com',
+        subject: `New Trip Planning Request from ${data.name}`,
+        replyTo: data.email,
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+            <h2 style="color: #0b3d51; border-bottom: 2px solid #c29d59; padding-bottom: 10px;">New Planning Inquiry</h2>
+            <div style="margin-top: 20px;">
+              <p><strong>Name:</strong> ${data.name}</p>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Phone:</strong> ${data.phone}</p>
+              <p><strong>Number of Travelers:</strong> ${data.travelers}</p>
+              <p><strong>Preferred Dates:</strong> ${data.preferredDates || 'Not specified'}</p>
+              <p><strong>Trip Details:</strong></p>
+              <div style="background: #fcfaf6; padding: 15px; border-radius: 8px; font-style: italic; color: #444;">
+                ${data.details.replace(/\n/g, '<br>') || 'No details provided.'}
+              </div>
+            </div>
+            <div style="margin-top: 30px; font-size: 12px; color: #888; border-top: 1px solid #eee; pt-10px;">
+              Sent from the Turacos Tours website automated booking system.
+            </div>
+          </div>
+        `,
+      });
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error in sendPlanTripRequest action:", error);
+    return { success: false, error: "Failed to process your request. Please try again later." };
   }
 }
