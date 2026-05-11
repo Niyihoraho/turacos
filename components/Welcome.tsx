@@ -33,7 +33,7 @@ const Welcome = () => {
             </div>
             
             <p className="text-lg md:text-xl text-charcoal/70 leading-relaxed mb-10 font-light">
-              Turacos Tours is a locally owned Rwandan tour company passionate about sharing the incredible beauty of our country. We specialize in wildlife safaris, gorilla tracking, and cultural immersions. Our expert local guides bring Rwanda's stories, landscapes, and wildlife to life — creating memories that last a lifetime.
+              Turacos Tours is a locally owned Rwandan tour company passionate about sharing the incredible beauty of our country. We specialize in experiences around Lake Kivu, offering unforgettable lake adventures, relaxing getaways, and authentic cultural immersions. Our expert local guides bring Rwanda’s stories, traditions, and natural beauty to life — creating memories that last a lifetime.
             </p>
           </motion.div>
 

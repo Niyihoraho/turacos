@@ -197,7 +197,7 @@ export async function sendPlanTripRequest(data: {
       const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: 'kaziyabwanaakenga@gmail.com',
+        to: 'heroicniyihoraho@gmail.com',
         subject: `New Trip Planning Request from ${data.name}`,
         replyTo: data.email,
         html: `
